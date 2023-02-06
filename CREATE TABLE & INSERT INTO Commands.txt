@@ -1,0 +1,182 @@
+CREATE TABLE Commands
+
+CUSTOMER
+
+create table customer
+(customerID number(15) not null,
+customerName varchar2(20) not null,
+address varchar2(50) null,
+phoneNumber char(12) null,
+email varchar2(20) null,
+constraint customer_pk primary key (customerID));
+
+ACCOUNT
+
+create table account
+(username varchar2(20) not null,
+customerID number(15) not null,
+password varchar2(15) not null,
+createdDate date not null,
+constraint account_pk primary key (username));
+
+ORDERS
+
+create table orders
+(orderID number(10) not null,
+orderDate date null,
+shippingAddress varchar2(50) null,
+shippingDate date null,
+deliveredDate date null,
+orderPrice number(7,2) not null,
+constraint orders_pk primary key (orderID));
+
+LINEITEM
+
+create table lineitem
+(orderID number(10) not null,
+quantity number(4) null,
+price number(7,2) not null,
+constraint lineitem_fk_order foreign key (orderID) references orders);
+
+PRODUCT
+
+create table product
+(productID number(10) not null,
+productName varchar2(15) not null,
+productPrice number(7,2) not null,
+description varchar2(50) null,
+constraint product_pk primary key (productID));
+
+PAYMENT
+
+create table payment
+(paymentID number(10) not null,
+paymentDate date null,
+totalPrice number(7,2) not null,
+constraint payment_pk primary key (paymentID));
+
+REVIEW
+
+create table review
+(reviewID number(10) not null,
+rating varchar2(10) null,
+constraint review_pk primary key (reviewID));
+
+PRODUCTTYPE
+
+create table productType
+(typeID number(10) not null,
+categoryName varchar2(20) null,
+constraint productType_pk primary key (typeID));
+
+TEMPORARY CUSTOMER
+
+create table temporarycustomer
+(customerID number(10) not null,
+constraint temporarycustomer_fk_customer foreign key (customerID) references customer);
+
+REGISTERED CUSTOMER
+
+create table registeredcustomer
+(customerID number(10) not null,
+reviewID number(10) not null,
+constraint registeredcustomer_fk_customer foreign key (customerID) references customer,
+constraint registeredcustomer_fk_review foreign key (reviewID) references review);
+
+
+GRANT SELECT ON CUSTOMER to PUBLIC; 
+GRANT SELECT ON ACCOUNT to PUBLIC; 
+GRANT SELECT ON ORDERS to PUBLIC; 
+GRANT SELECT ON LINEITEM to PUBLIC; 
+GRANT SELECT ON PRODUCT to PUBLIC; 
+GRANT SELECT ON PAYMENT to PUBLIC; 
+GRANT SELECT ON REVIEW to PUBLIC; 
+
+
+INSERT INTO Commands 
+
+INSERT INTO CUSTOMER VALUES(‘10001’, 'Gowtham', '1328 Riverside Drive', '302-776-8365', 'trm89@hotmail.com'); 
+INSERT INTO CUSTOMER VALUES(‘10002’, 'Grace', '4 Redbird Drive', '215-578-5555', 'work4money@gmail.com'); 
+INSERT INTO CUSTOMER VALUES(‘10003’, 'Sreerekha', '138 Vanguard Street', '732-444-1234’, 'tacos56@yahoo.com'); 
+INSERT INTO CUSTOMER VALUES(‘10004’, 'Brinda', 'P O Box 3471', '605-563-0012', 'qxx234@aol.com'); 
+INSERT INTO CUSTOMER VALUES(‘10005’, 'Mahima', '84 Banff Court’, '412-883-2345', 'movies99@comcast.net'); 
+
+ 
+INSERT INTO ACCOUNT VALUES(‘Gow21’, ‘10001’, ‘Study@19’, ‘16-JUN-2021’); 
+INSERT INTO ACCOUNT VALUES(‘Gigi67’, ‘10002’, ‘Icecream@!’, ‘03-MAR-2021’); 
+INSERT INTO ACCOUNT VALUES(‘Ree@3’, ‘10003’, ‘Chocolate44’, ‘28-FEB-2021’); 
+INSERT INTO ACCOUNT VALUES(‘Briellow11’, ‘10004’, ‘Camaro99’, ‘15-AUG-2021’); 
+INSERT INTO ACCOUNT VALUES(‘Juma&$’, ‘10005’, ‘9Spring@’, ‘09-NOV-2021’); 
+
+ 
+INSERT INTO ORDERS VALUES(‘30001’, ‘4-OCT-2021’ , ‘3675 Market Street’, ‘10-OCT-2021’, ‘13-OCT-2021’, ‘1019.99’); 
+INSERT INTO ORDERS VALUES(‘30002’, ‘20-OCT-2021’ , ‘4701 Limestone Road’, ‘28-OCT-2021’, ‘1-NOV-2021’, ‘1200.19’); 
+INSERT INTO ORDERS VALUES(‘30003’, ‘12-NOV-2021’ , ‘138 Vanguard Street’, ‘20-NOV-2021’, ‘25-NOV-2021’, ‘1959.00’); 
+INSERT INTO ORDERS VALUES(‘30004’, ‘4-OCT-2021’ , ‘14 Shipley Road’, ‘11-OCT-2021’, ‘14-OCT-2021’, ‘70.99’); 
+INSERT INTO ORDERS VALUES(‘30005’, ‘5-DEC-2021’ , ‘84 Banff Court’, ‘12-DEC-2021’, ‘15-DEC-2021’, ‘300.20’); 
+
+ 
+INSERT INTO LINEITEM VALUES(‘30001’, ‘10’, ‘120.00’); 
+INSERT INTO LINEITEM VALUES(‘30002’, ‘5’, ‘899.99’); 
+INSERT INTO LINEITEM VALUES(‘30003’, ‘3’, ‘70.99’); 
+INSERT INTO LINEITEM VALUES(‘30004’, ‘14’, ‘300.20’); 
+INSERT INTO LINEITEM VALUES(‘30005’, ‘1’, ‘1959.00’); 
+
+ 
+INSERT INTO PRODUCT VALUES(‘50001’, ‘Airpods’, ‘120.00’, 'Brand-Apple, Color-White'); 
+INSERT INTO PRODUCT VALUES(‘50002’, ‘Laptop’, ‘899.99’, ‘Brand-Lenovo, Color-Silver’); 
+INSERT INTO PRODUCT VALUES(‘50003’, ‘Microwave’, ‘70.99’, ‘Brand-Whirlpool, Color-Black’); 
+INSERT INTO PRODUCT VALUES(‘50004’, ‘Printer’, ‘300.20’, ‘Brand-HP, Color-Grey’); 
+INSERT INTO PRODUCT VALUES(‘50005’, ‘Projector’, ‘1959.00’, ‘Brand-Sony, Color-Black’); 
+
+INSERT INTO PAYMENT VALUES(‘60001’, ‘20-OCT-2021’, ‘1030.87’); 
+INSERT INTO PAYMENT VALUES(‘60002’, ‘28-OCT-2021, ‘1220.19’); 
+INSERT INTO PAYMENT VALUES(‘60003’, ‘20-NOV-2021’, ‘1959.00’); 
+INSERT INTO PAYMENT VALUES(‘60004’, ‘11-NOV-2021’, ‘77.87’); 
+INSERT INTO PAYMENT VALUES(‘60005’, ‘12-DEC-2021’, ‘300.20’); 
+
+ 
+INSERT INTO REVIEW VALUES(‘70001’, ‘Excellent’); 
+INSERT INTO REVIEW VALUES(‘70002’, ‘Bad’); 
+INSERT INTO REVIEW VALUES(‘70003’, ‘Good’); 
+INSERT INTO REVIEW VALUES(‘70004’, ‘Average’); 
+INSERT INTO REVIEW VALUES(‘70005’, ‘Good’); 
+
+ 
+INSERT INTO PRODUCTTYPE VALUES(‘80001’, ‘electronics’); 
+INSERT INTO PRODUCTTYPE VALUES(‘80002’, ‘electronics’); 
+INSERT INTO PRODUCTTYPE VALUES(‘80003’, ‘home’); 
+INSERT INTO PRODUCTTYPE VALUES(‘80004’, ‘office’); 
+INSERT INTO PRODUCTTYPE VALUES(‘80005’, ‘education’); 
+
+ 
+INSERT INTO TEMPORARYCUSTOMER VALUES(‘10004’); 
+INSERT INTO TEMPORARYCUSTOMER VALUES(‘10001’); 
+INSERT INTO TEMPORARYCUSTOMER VALUES(‘10003’); 
+INSERT INTO TEMPORARYCUSTOMER VALUES(‘10005’); 
+INSERT INTO TEMPORARYCUSTOMER VALUES(‘10002’); 
+
+ 
+INSERT INTO REGISTEREDCUSTOMER VALUES (‘10001’, ‘70001’); 
+INSERT INTO REGISTEREDCUSTOMER VALUES(‘10002’, ‘70002’); 
+INSERT INTO REGISTEREDCUSTOMER VALUES(‘10003’, ‘70003’); 
+INSERT INTO REGISTEREDCUSTOMER VALUES(‘10004’, ‘70004’); 
+INSERT INTO REGISTEREDCUSTOMER VALUES(‘10005’, ‘70005’); 
+
+COMMIT;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
